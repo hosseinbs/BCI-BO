@@ -1,0 +1,13 @@
+#!/bin/bash
+#PBS -S /bin/bash
+#PBS -M hosseinbs@gmail.com
+#PBS -m bea
+#PBS -l mem=4gb
+module load application/python/2.7.3
+module load python/2.7.5.anaconda
+module load python/2.7.3
+cd $PBS_O_WORKDIR
+ echo "Current working directory is `pwd`"
+echo "Starting: run at: `date`"
+python ./BCI_Framework/Single_Job_runner.py BCI_Framework LogisticRegression morlet BCICIV2a 8 3 RandomForestEIChooser True regularization_type=l2 discard_mv_begin=62.0 window_size=-1 fe_params=None discard_mv_end=251.0 C=0.0126185688307 channel_type=CSP6 discard_nc_begin=0 window_overlap_size=0 discard_nc_end=0
+echo "Program finished with exit code $? at: `date`"
