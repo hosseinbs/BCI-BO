@@ -4,8 +4,8 @@ import numpy as np
 from math import sqrt, pi, log
 from scipy import linalg as LA
 from morlet_wavelet import *
-import matplotlib
-matplotlib.use('Agg')
+# import matplotlib
+# matplotlib.use('Agg')
 from spectrum import *
 
 class Feature_Extractor:

@@ -10,7 +10,7 @@ number_of_subjects==9
 sampling_rate==250
 trial_size==2000
 movement_trial_size_list==1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000
-movement_start_list==750, 750, 750, 750, 750, 750, 750, 750, 750
+movement_start_list==875, 875, 875, 875, 875, 875, 875, 875, 875
 number_of_classes==2
 number_of_channels==3
 channel_names_str==C3,Cz,C4

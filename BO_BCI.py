@@ -10,7 +10,7 @@ import Configuration_BCI
 import Single_Job_runner as SJR
 import numpy as np
 import itertools
-
+import time
 from time import sleep
 import sklearn
 
@@ -247,17 +247,26 @@ def generate_all_candidates(dataset_name, optimization_type):
 
 if __name__ == '__main__':
 
+
     print "Bayesian Optimization for BCI"
-    
-    datasets = ['BCICIV2a']#['BCICIII3b', 'BCICIV2b',
+    # start_time = time.time()
+    datasets = ['BCICIII3b']#['BCICIII3b','BCICIV2b', 'BCICIV2a']
     classifier = 'LogisticRegression'
     feature = 'BP' #'morlet'] #morlet for type 2 and 4 does not work!!!!!
     optimization_types_dict = {('BCICIII3b','BP'):[2], ('BCICIII3b','morlet'):[1], ('BCICIV2b','BP') : [2], ('BCICIV2b','morlet') : [1], ('BCICIV2a','BP') : [4], ('BCICIV2a','morlet') : [3]}
-    BO_selection_types = [ "GPEIOptChooser1", "RandomForestEIChooser1", "RandomChooser1"]
+    # BO_selection_types = ["GPEIOptChooser1"]
+    BO_selection_types = ["GPEIOptChooser1", "RandomForestEIChooser1", "RandomChooser1",
+                           "GPEIOptChooser2", "RandomForestEIChooser2", "RandomChooser2",
+                           "GPEIOptChooser3", "RandomForestEIChooser3", "RandomChooser3",
+                           "GPEIOptChooser4", "RandomForestEIChooser4", "RandomChooser4",
+                           "GPEIOptChooser5", "RandomForestEIChooser5", "RandomChooser5",
+                            "GPEIOptChooser6", "RandomForestEIChooser6", "RandomChooser6",
+                           "GPEIOptChooser7", "RandomForestEIChooser7", "RandomChooser7",
+                           "GPEIOptChooser8", "RandomForestEIChooser8", "RandomChooser8",
+                           "GPEIOptChooser9", "RandomForestEIChooser9", "RandomChooser9",
+                           "GPEIOptChooser10", "RandomForestEIChooser10", "RandomChooser10"]
 
-        # , "GPEIOptChooser2", "GPEIOptChooser3", "GPEIOptChooser4", "GPEIOptChooser5", "RandomForestEIChooser1", "RandomForestEIChooser2", "RandomForestEIChooser3", "RandomForestEIChooser4",
-        #                   "RandomForestEIChooser5", "RandomChooser1", "RandomChooser2", "RandomChooser3", "RandomChooser4", "RandomChooser5"]
-    
+
     all_subjects_candidates_dict = {}
     for dataset_ind, dataset in enumerate(datasets):
 #         for bo_type in BO_selection_types:
@@ -274,6 +283,7 @@ if __name__ == '__main__':
             break
         
         for dataset_ind, dataset in enumerate(datasets):
+
             for bo_type_ind, bo_type in enumerate(BO_selection_types):
                 for optimization_type in optimization_types_dict[(dataset, feature)]:
                     print dataset, feature, bo_type, optimization_type
@@ -281,9 +291,8 @@ if __name__ == '__main__':
             
                     class Job_Params:
                         job_dir = '../Candidates'
-                        num_all_jobs = 100
+                        num_all_jobs = 60
                         dataset = dataset
-                        
                         from random import randrange
                         seed = randrange(50)
                         classifier_name = classifier
@@ -309,6 +318,9 @@ if __name__ == '__main__':
                 
                         finished[(subj+str(dataset_ind), optimization_type)] = sp.main(Job_Params, complete_jobs, subj)
                         
-                    sleep(1)
+                    # sleep(1)
         
         first_iteration = False
+
+    # execution_time = time.time() - start_time
+    # print execution_time

@@ -1,3 +1,6 @@
+#
+# This code is adapted from jasper Snoek's Bayesian optimization code
+#
 ##
 # Copyright (C) 2012 Jasper Snoek, Hugo Larochelle and Ryan P. Adams
 #                                                                                                                                                                              
@@ -63,42 +66,47 @@ import Single_Job_runner as SJR
 #
 
 class spearmint_lite:
-    
+
     def __init__(self, job_params, candidates_list, config, bo_type):
 
-        self.type = bo_type
-        self.config = config
-        self.logging = logging
-        if self.config.configuration['logging_level_str'] == 'INFO':
-            self.logging.basicConfig(format='%(asctime)s %(message)s', level=logging.INFO)
+        if job_params == None and candidates_list == None:
+            self.type = bo_type
+            self.config = config
+
         else:
-            self.logging.basicConfig(level=logging.NOTSET)
+            self.type = bo_type
+            self.config = config
+            self.logging = logging
+            if self.config.configuration['logging_level_str'] == 'INFO':
+                self.logging.basicConfig(format='%(asctime)s %(message)s', level=logging.INFO)
+            else:
+                self.logging.basicConfig(level=logging.NOTSET)
         
-        self.logging.info('started building spearmint_lite!') 
+            self.logging.info('started building spearmint_lite!')
         
-        self.myPython_path = 'python'
+            self.myPython_path = 'python'
             
-        self.job_dir = job_params.job_dir
-        self.num_jobs = job_params.num_all_jobs
-        self.dataset = job_params.dataset
-        self.seed = job_params.seed
-        self.classifier_name = job_params.classifier_name
-        self.feature_extraction = job_params.feature_extraction
-        self.n_concurrent_jobs = job_params.n_concurrent_jobs
-        self.n_initial_candidates_length = job_params.n_initial_candidates
+            self.job_dir = job_params.job_dir
+            self.num_jobs = job_params.num_all_jobs
+            self.dataset = job_params.dataset
+            self.seed = job_params.seed
+            self.classifier_name = job_params.classifier_name
+            self.feature_extraction = job_params.feature_extraction
+            self.n_concurrent_jobs = job_params.n_concurrent_jobs
+            self.n_initial_candidates_length = job_params.n_initial_candidates
 
-        self.chooser_module = job_params.chooser_module
+            self.chooser_module = job_params.chooser_module
         
-        self.candidates = np.array(candidates_list)
-        self.job_results_file = 'results_' + str(self.type) + '_' + job_params.chooser_module + '_'+ self.classifier_name + '_' + self.feature_extraction + '.dat'
+            self.candidates = np.array(candidates_list)
+            self.job_results_file = 'results_' + str(self.type) + '_' + job_params.chooser_module + '_'+ self.classifier_name + '_' + self.feature_extraction + '.dat'
 
-        chooser_module_passed_to_framework = ''.join([i for i in job_params.chooser_module if not i.isdigit()])
-        self.bcic = Main_BCI.Main('BCI_Framework', self.dataset, self.classifier_name, self.feature_extraction, self.type, chooser_module_passed_to_framework, 'ALL', -1)
-        self.SJR = SJR.Simple_Job_Runner(self.bcic.dir, self.bcic.learner_name, self.bcic.feature_extractor_name,self.bcic.dataset_name, bo_type, chooser_module_passed_to_framework)
+            chooser_module_passed_to_framework = ''.join([i for i in job_params.chooser_module if not i.isdigit()])
+            self.bcic = Main_BCI.Main('BCI_Framework', self.dataset, self.classifier_name, self.feature_extraction, self.type, chooser_module_passed_to_framework, 'ALL', -1)
+            self.SJR = SJR.Simple_Job_Runner(self.bcic.dir, self.bcic.learner_name, self.bcic.feature_extractor_name,self.bcic.dataset_name, bo_type, chooser_module_passed_to_framework)
         
-        self.finished = False
+            self.finished = False
         
-        self.logging.info('An spearmint instance has been built! num_jobs: %s dataset: %s random seed: %s classifier: %s feature_extractor: %s'
+            self.logging.info('An spearmint instance has been built! num_jobs: %s dataset: %s random seed: %s classifier: %s feature_extractor: %s'
                           + 'number of concurrent jobs: %s  results_file: %s', str(self.num_jobs), str(self.dataset),
                           str(self.seed), self.classifier_name, self.feature_extraction, str(self.n_concurrent_jobs), self.job_results_file)
     
@@ -320,8 +328,6 @@ class spearmint_lite:
                         'cutoff_frequencies_low_list': cutoff_frequencies_low,
                         'cutoff_frequencies_high_list':cutoff_frequencies_high, 'fe_params':None, 'channel_type':channels_list[int(float(params[-1]))]}
 
-#         elif self.type == 5:
-#             pass
         return params_dict
     
     def run_optimal_job(self, params, subject, learner_params):

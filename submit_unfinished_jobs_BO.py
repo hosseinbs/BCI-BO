@@ -40,6 +40,9 @@ if __name__ == '__main__':
             print optimization_type
             chooser_module = f.split('_')[2]
             print chooser_module
+
+            # if feature == 'morlet':
+            #     continue
             
             with open(os.path.join(mypath, f)) as candidates_file:
                 all_candidates = candidates_file.readlines()

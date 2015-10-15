@@ -9,5 +9,5 @@ module load python/2.7.3
 cd $PBS_O_WORKDIR
  echo "Current working directory is `pwd`"
 echo "Starting: run at: `date`"
-python ./BCI_Framework/Single_Job_runner.py BCI_Framework LogisticRegression morlet BCICIV2a 8 3 RandomForestEIChooser True regularization_type=l2 discard_mv_begin=62.0 window_size=-1 fe_params=None discard_mv_end=251.0 C=0.0126185688307 channel_type=CSP6 discard_nc_begin=0 window_overlap_size=0 discard_nc_end=0
+python ./BCI_Framework/Single_Job_runner.py BCI_Framework LogisticRegression BP BCICIII3b X11 2 RandomChooser False discard_mv_begin=0.0 window_size=-1 fe_params=None discard_mv_end=32.0 cutoff_frequencies_low_list=8.0_15.5 channel_type=ALL-1 discard_nc_begin=0 window_overlap_size=0 discard_nc_end=0 cutoff_frequencies_high_list=12.75_21.25
 echo "Program finished with exit code $? at: `date`"

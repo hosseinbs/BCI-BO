@@ -1,3 +1,8 @@
+#
+# This code is adapted from jasper Snoek's Bayesian optimization code
+#
+
+
 ##
 # Copyright (C) 2012 Jasper Snoek, Hugo Larochelle and Ryan P. Adams
 # 
