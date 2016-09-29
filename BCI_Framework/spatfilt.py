@@ -1,3 +1,5 @@
+#This file is not my own code I have taken it from https://github.com/breuderink/eegtools
+
 import numpy as np
 
 
